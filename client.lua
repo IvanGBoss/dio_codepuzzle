@@ -1,4 +1,3 @@
-local QBCore = exports['qb-core']:GetCoreObject()
 local successCb
 local failCb
 local resultReceived = false
