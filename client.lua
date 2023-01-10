@@ -14,24 +14,27 @@ RegisterNUICallback('dioResult', function(data, cb)
     cb('ok')
 end)
 
-TriggerEvent('chat:addSuggestion', '/diopuzzle', 'Start the puzzle game', {
-    { name = "Guesses", help = "Number Of Guesses" },
-    { name = "Code", help = "Length of the Code" }
-})
-
-RegisterCommand('diopuzzle', function(source, args, raw)
-    NumberofGuesses = args[1]
-    LengthOfCode = args[2]
-    print(NumberofGuesses)
-    print(LengthOfCode)
-    exports["dio_codepuzzle"]:guessCode(NumberofGuesses, LengthOfCode,
-    function() -- success
-        print("success")
-    end,
-    function() -- failure
-        print("failure")
+if Config.TestCommand then
+    TriggerEvent('chat:addSuggestion', '/diopuzzle', 'Start the puzzle game', {
+        { name = "Guesses", help = "Number Of Guesses" },
+        { name = "Code", help = "Length of the Code" }
+    })
+    
+    RegisterCommand('diopuzzle', function(source, args, raw)
+        NumberofGuesses = args[1]
+        LengthOfCode = args[2]
+        print(NumberofGuesses)
+        print(LengthOfCode)
+        exports["dio_codepuzzle"]:guessCode(NumberofGuesses, LengthOfCode,
+        function() -- success
+            print("success")
+        end,
+        function() -- failure
+            print("failure")
+        end)
     end)
-end)
+end
+
 
 
 exports('guessCode', function(numberOfGuesses, codeLen, success, fail)

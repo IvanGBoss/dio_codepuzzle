@@ -22,7 +22,7 @@ files {
 --[[
     First Argument is the number of guesses a player has to guess. Recommended 5 for easier and 4 for hard.
     Second Argument is the length of the code. Recommended 4. 
-    exports["dio_puzzle"]:guessCode(5,
+    exports["dio_puzzle"]:guessCode(5, 4,
     function() -- success
         print("success")
     end,
