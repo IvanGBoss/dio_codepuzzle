@@ -2,6 +2,7 @@ var guessCount = 0;
 let guessesAllowed = 5;
 let guessLen = 4; 
 let code = generateCode(guessLen);
+var game_playing = false;
 
 $(document).ready(function(){
      $("#game").hide()
@@ -77,10 +78,19 @@ function endGame(result) {
     $.post('https://dio_codepuzzle/dioResult', JSON.stringify({
         success: result
     }))
+    game_playing = false;
     setTimeout(function() {
         window.location.reload();
     }, 2000);
     
+}
+
+function endGameStrict() {
+    $.post('https://dio_codepuzzle/dioResult', JSON.stringify({
+        success: false
+    }))
+    game_playing = false;
+    window.location.reload();
 }
 
 window.addEventListener('message', (event) => {
@@ -89,9 +99,19 @@ window.addEventListener('message', (event) => {
         guessesAllowed = data.guesses
         guessLen = data.codeLen
         startGame()
-    }
-
-    if (data.type === 'End') {
-        endGame()
+        game_playing = true;
     }
 });
+
+document.addEventListener("keydown", function(ev) {
+    let key_pressed = ev.key;
+    let valid_keys = ['Escape'];
+  
+    if (game_playing && valid_keys.includes(key_pressed)) {
+        switch (key_pressed) {
+            case 'Escape':
+                endGameStrict();
+                break;
+        }
+    }
+  });
